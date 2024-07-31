@@ -1,3 +1,4 @@
+import { formatDate } from "@/helpers/date";
 import { Note } from "@/schema/note";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
@@ -8,12 +9,18 @@ export default async function Index() {
 
   return (
     <>
-      <Link href="/add" className="top-2 left-2 bg-black text-white py-3 px-5 rounded shadow-sm border-2 border-black hover:shadow-lg duration-300 fixed top-0">Add Capsule</Link>
+    <div className="right-5 top-5 bg-white border shadow-2xl flex px-10 py-3 w-auto rounded gap-5 fixed">
+      <Link href="/add-capsule" className="bg-black text-white py-3 px-5 rounded shadow-sm border-2 border-black hover:bg-slate-900 duration-300">Add Capsule</Link>
+      <Link href="https://momentous-stew-0b7.notion.site/Kapsul-Note-cf4471e10ecb4a64b55888ad9f6506c7?pvs=4" className="bg-white text-black py-3 px-5 rounded shadow-sm border-2 border-black hover:bg-gray-200 duration-300">About us</Link>
+    </div>
       <main className="min-h-screen flex flex-col items-center justify-center w-full">
         <div className="grid grid-rows-3 grid-flow-col gap-4">
           {notes.data?.length && notes.data?.map((note: Note, Index: number) => {
             return (
-              <div className="text-sm bg-white row-span-3 max-w-full border-0 p-2 rounded sm:border-2 sm:max-w-sm" key={note.created_at + "-" + Index}>
+              <div className="text-sm bg-white row-span-3 max-w-full border-0 p-2 rounded sm:border-2 sm:max-w-sm rounded min-w-64 h-auto" key={note.created_at + "-" + Index}>
+                <div className="text-sm text-slate-600">
+                    {formatDate(new Date(note.created_at))}
+                </div>
                 {note.value}
               </div>
             )
