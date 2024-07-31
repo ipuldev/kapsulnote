@@ -4,3 +4,7 @@ export interface Note {
     value:string
     ip_address?:string
   }
+
+export interface NoteRequestBody {
+  value:string
+}

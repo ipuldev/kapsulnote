@@ -1,6 +1,6 @@
 import { BackButton } from "@/components/buttons/BackButton";
 import { SubmitButton } from "@/components/buttons/SubmitButton";
-import { Note } from "@/schema/note";
+import { NoteRequestBody } from "@/schema/note";
 import { createClient } from "@/utils/supabase/client";
 import { redirect } from "next/navigation";
 
@@ -10,7 +10,7 @@ export default function Index(){
 
         const value = formData.get("value") as string;
 
-        const notePayload: Note = {
+        const notePayload: NoteRequestBody = {
             value : value,
         }
 
