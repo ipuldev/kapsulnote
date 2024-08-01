@@ -5,14 +5,11 @@ import Link from "next/link";
 
 export default async function Index() {
   const supabase = createClient();
-  const notes = await supabase.from("note").select("*");
-
-  const list4 = (notes.count ?? 0) / 4;
-  const list3 = (notes.count ?? 0) / 3;
+  const notes = await supabase.from("note").select("*").order("created_at", { ascending: false});
 
   return (
     <>
-      <div className="right-5 top-5 bg-white border shadow-2xl flex px-10 py-3 w-auto rounded gap-5 fixed">
+      <div className="flex bg-white border w-full fixed z-50 font-sans bg-white flex-row flex w-full border-t-[1px] py-3 border-top-2 bottom-0 justify-between px-5 shadow-2xl sm:bottom-auto sm:w-auto sm:right-5 sm:top-5 sm:px-10 sm:py-3 sm:rounded sm:gap-5">
         <Link
           href="/add-capsule"
           className="bg-black text-white py-3 px-5 rounded shadow-sm border-2 border-black hover:bg-slate-900 duration-300"
