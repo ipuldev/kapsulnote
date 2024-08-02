@@ -10,7 +10,7 @@ type Props = ComponentProps<"button"> & {
 
 export function BackButton(props : Props) {
   return (
-    <Link href={props.href} className={clsx(props.classNames, "bg-black text-white rounded-md mt-5 px-4 py-2 text-white hover:shadiw-lg duration-150 flex gap-2 fixed top-0 left-2")}>
+    <Link href={props.href} className={clsx(props.classNames, "bg-white text-black rounded-md px-4 py-2 border border-black hover:shadiw-lg duration-150 flex gap-2")}>
         <ChevronLeft></ChevronLeft>
         Back
     </Link>
