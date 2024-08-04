@@ -3,7 +3,7 @@ import { createClient } from "@/utils/supabase/client";
 
 export async function POST(req: NextRequest) {
     try {
-        const { value } = await req.json();
+        const { value, perspective_score } = await req.json();
 
         // Extract IP address
         const ipAddress = req.headers.get('x-forwarded-for') || req.headers.get('remote-address') || '';
@@ -11,7 +11,8 @@ export async function POST(req: NextRequest) {
         const supabase = createClient();
         const notePayload = {
             value: value,
-            ip_address: ipAddress
+            ip_address: ipAddress,
+            perspective_score: perspective_score
         };
 
         const { data, error } = await supabase.from("note").insert(notePayload);

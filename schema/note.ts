@@ -3,6 +3,7 @@ export interface Note {
     created_at: string
     value:string
     ip_address?:string
+    perspective_score: number
   }
 
 export interface NoteRequestBody {

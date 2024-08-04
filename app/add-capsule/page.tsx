@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { BackButton } from "@/components/buttons/BackButton";
 import { SubmitButton } from "@/components/buttons/SubmitButton";
-import { noteSchema } from "./schema";
+import { noteSchema, PerspectiveAPIResponse } from "./schema";
 import clsx from "clsx";
 
 export default function AddCapsule() {
@@ -16,6 +16,7 @@ export default function AddCapsule() {
 
     const formData = new FormData(e.target);
     const value = formData.get("value") as string;
+    let perspectiveScore = 0;
 
     const { error } = noteSchema.validate({ value });
     if (error) {
@@ -25,11 +26,23 @@ export default function AddCapsule() {
     }
 
     try {
+        const response = await fetch("/perspective", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ value }),
+      });
+      const result: PerspectiveAPIResponse = await response.json();
+      perspectiveScore = result.attributeScores["TOXICITY"].summaryScore.value;
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    
+    try {
       // Send request to save the note including IP address
       await fetch("/save-note", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ value }),
+        body: JSON.stringify({ value, perspective_score : perspectiveScore }),
       });
 
       // Optionally redirect or show a success message
