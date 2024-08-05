@@ -46,7 +46,7 @@ export default function AddCapsule() {
   };
 
   useEffect(() => {
-    if (value && value.length > 3) {
+    if ((value && value.length > 3) || isLoading) {
       setIsLoading(true);
       seLoadingText("Analyzing")
       const checkToxicity = setTimeout(async () => {
