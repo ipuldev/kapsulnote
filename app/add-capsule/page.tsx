@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BackButton } from "@/components/buttons/BackButton";
 import { SubmitButton } from "@/components/buttons/SubmitButton";
 import { noteSchema, PerspectiveAPIResponse } from "./schema";
@@ -8,15 +8,18 @@ import clsx from "clsx";
 
 export default function AddCapsule() {
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingText, seLoadingText] = useState("Transferring");
   const [isRequired, setIsRequired] = useState(false);
+  const [value, setValue] = useState("");
+  const [toxicity, setToxicity] = useState(0);
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
     setIsLoading(true);
+    seLoadingText("Transferring")
 
     const formData = new FormData(e.target);
     const value = formData.get("value") as string;
-    let perspectiveScore = 0;
 
     const { error } = noteSchema.validate({ value });
     if (error) {
@@ -26,23 +29,11 @@ export default function AddCapsule() {
     }
 
     try {
-        const response = await fetch("/perspective", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ value }),
-      });
-      const result: PerspectiveAPIResponse = await response.json();
-      perspectiveScore = result.attributeScores["TOXICITY"].summaryScore.value;
-    } catch (error) {
-      console.error("Error:", error);
-    }
-    
-    try {
       // Send request to save the note including IP address
       await fetch("/save-note", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ value, perspective_score : perspectiveScore }),
+        body: JSON.stringify({ value, perspective_score: toxicity }),
       });
 
       // Optionally redirect or show a success message
@@ -54,16 +45,47 @@ export default function AddCapsule() {
     }
   };
 
+  useEffect(() => {
+    if (value && value.length > 3) {
+      setIsLoading(true);
+      seLoadingText("Analyzing")
+      const checkToxicity = setTimeout(async () => {
+        const response = await fetch("/perspective", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ value }),
+        });
+        const result: PerspectiveAPIResponse = await response.json();
+        setToxicity(result.attributeScores?.["TOXICITY"]?.summaryScore?.value ?? 0);
+        setIsLoading(false);
+      }, 2000);
+  
+  
+      return () => {
+        clearTimeout(checkToxicity)
+      }
+    }
+  }, [value])
+
   return (
     <form
       className="flex flex-col w-full sm:p-5 w-full items-start sm:justify-center sm:items-center p-2 sm:p-0"
       onSubmit={onSubmit}
     >
-      <div className="flex flex-col gap-5 w-full sm:w-11/12 lg:w-2/6">
+      <div className="flex flex-col gap-5 w-full items-start sm:w-11/12 lg:w-2/6">
+        {(toxicity * 100) > 40 && (
+          <div className="text-red-500 text-xm w-auto rounded-full order-1 bg-white py-1 px-3 rounded sm:order-first">
+            {(toxicity * 100).toFixed(2)}% likely to be toxic
+          </div>
+        )}
         <textarea
           name="value"
           id="value"
-          className={clsx(isRequired ? 'border-red-500': 'border-grey-300','duration-150 text-black w-full text-sm min-h-72 rounded-md border hover:border-blue-400 p-2 focus:ring-4 focus:outline-none focus:ring-blue-100 duration-150 sm:min-h-52 sm:resize-x')}
+          onChange={(event) => setValue(event.target.value)}
+          className={clsx(
+            isRequired ? "border-red-500" : "border-grey-300",
+            "duration-150 text-black w-full text-sm min-h-72 rounded-md border hover:border-blue-400 p-2 focus:ring-4 focus:outline-none focus:ring-blue-100 duration-150 sm:min-h-52 sm:resize-x"
+          )}
           placeholder="Begin your notes here, to be cherished for centuries, awaiting future readers..."
         />
         <div className="flex justify-between w-full order-first sm:order-last">
@@ -95,7 +117,7 @@ export default function AddCapsule() {
                     fill="currentFill"
                   />
                 </svg>
-                Transfering
+                {loadingText}
               </div>
             ) : (
               "Transfer"

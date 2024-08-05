@@ -1,7 +1,6 @@
 import { formatDate } from "@/helpers/date";
 import { Note } from "@/schema/note";
 import { createClient } from "@/utils/supabase/server";
-import clsx from "clsx";
 import Link from "next/link";
 
 export default async function Index() {
@@ -38,7 +37,7 @@ export default async function Index() {
                   {formatDate(new Date(note.created_at))}
                 </div>
                 {note.value}
-                {toxicity > 40 && <div className="text-red-500 mt-2 text-xm bg-red-50 w-auto py-1 px-2 rounded">Toxicity : {toxicity.toFixed(2)}%</div>}
+                {toxicity > 40 && <div className="text-red-500 mt-2 text-xm bg-red-50 w-auto py-1 px-2 rounded">{toxicity.toFixed(2)}% likely to be toxic</div>}
               </div>
             );
           })}
