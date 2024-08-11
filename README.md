@@ -1,12 +1,12 @@
 # Kapsulnote
 
-Kapsulnote is an open-source software platform that allows users to share and send text content anonymously without requiring a login. It promotes free speech by providing a safe space for users to express their thoughts and opinions. The platform also incorporates functionality to detect the toxicity of the content to ensure a respectful and constructive community.
+Kapsulnote is a dynamic, open-source platform that empowers users to share and send text content anonymously, without the need for a login. Similar to a more private Twitter, it fosters free speech and open dialogue in a secure environment. With built-in toxicity detection, Kapsulnote ensures conversations remain respectful and constructive.
 
 ## Features
 
-- **Anonymous Text Sharing**: Users can share and send text content without the need to create an account or log in.
-- **Free Speech Promotion**: The platform encourages users to express themselves freely while maintaining a respectful environment.
-- **Toxicity Detection**: A built-in function analyzes the content to detect toxicity, helping to maintain a positive community atmosphere.
+- **Anonymous Text Sharing**: Effortlessly share and send text content without creating an account or logging in.
+- **Free Speech Promotion**: Express yourself freely while enjoying a supportive and respectful community.
+- **Toxicity Detection**: Advanced algorithms help maintain a positive atmosphere by detecting and flagging toxic content.
 
 ## Development Status
 
@@ -22,7 +22,7 @@ To get started with Kapsulnote, follow these steps:
 
 1. **Clone the Repository**: 
     ```bash
-    git clone https://github.com/ipuldev/kapsulnote.git
+    git clone https://github.com/yourusername/kapsulnote.git
     ```
 2. **Install Dependencies**: 
     Navigate to the project directory and install the required dependencies.
@@ -33,8 +33,12 @@ To get started with Kapsulnote, follow these steps:
 3. **Run the Application**: 
     Start the application locally.
     ```bash
-    npm run dev
+    npm start
     ```
+
+## More Information
+
+For more details and to experience the platform, visit [app.kapsulnote.com](https://app.kapsulnote.com).
 
 ## Contact
 
@@ -42,7 +46,7 @@ If you have any questions or suggestions, feel free to reach out via email at [k
 
 ## License
 
-This project is licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](LICENSE). This means that you are free to share and adapt the material for non-commercial purposes, provided appropriate credit is given, and any derivative works are licensed under the same terms.
+This project is licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](LICENSE). This means you can share and adapt the material for non-commercial purposes, provided appropriate credit is given, and any derivative works are licensed under the same terms.
 
 ---
 
