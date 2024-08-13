@@ -8,6 +8,12 @@ Kapsulnote is a dynamic, open-source platform that empowers users to share and s
 - **Free Speech Promotion**: Express yourself freely while enjoying a supportive and respectful community.
 - **Toxicity Detection**: Advanced algorithms help maintain a positive atmosphere by detecting and flagging toxic content.
 
+## TODO Task
+- **Translate**: add button to the each card so people can easly read the content from any lang
+- **Lazy load**: lazy load when we open the main page, its make the web more light and comfy
+- **React Button**: user can easly click react button without login, use ip detector if needed or just put the reaction without count event
+- **Rich Content**: in this case the goal was convert our platform to be study platform so user can easly share material about language, math or anyting so our goal keep the format from user or add such as texteditor there, suggest to add material button so when user click it we can convert our textarea to be rich editor or anyothre style.
+
 ## Development Status
 
 This project is currently a work in progress. We welcome contributions from the community to help improve and expand the platform.
