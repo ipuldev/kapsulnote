@@ -1,11 +1,14 @@
-import { formatDate } from "@/helpers/date";
+import Link from "next/link";
 import { Note } from "@/schema/note";
 import { createClient } from "@/utils/supabase/server";
-import Link from "next/link";
+import NoteCard from "@/components/noteCard/NoteCard";
 
 export default async function Index() {
   const supabase = createClient();
-  const notes = await supabase.from("note").select("*").order("created_at", { ascending: false});
+  const { data: notes } = await supabase
+    .from("note")
+    .select("*")
+    .order("created_at", { ascending: false });
 
   return (
     <>
@@ -23,29 +26,15 @@ export default async function Index() {
           About us
         </Link>
       </div>
-      <div className="columns-1 gap-5 sm:columns-5 p-5 mb-12 sm:mb-0">
-        {notes.data?.length &&
-          notes.data?.map((note: Note, Index: number) => {
-            const perspectiveValue = note.perspective_score;
-            const toxicity = (perspectiveValue * 100);
-            return (
-              <div
-                className="flex flex-col items-start mb-5 text-sm text-black bg-white max-w-full border-0 p-2 rounded sm:border-2 sm:max-w-sm min-w-64 h-auto break-inside-avoid-column"
-                key={note.created_at + "-" + Index}
-              >
-                <div className="text-sm text-slate-600">
-                  {formatDate(new Date(note.created_at))}
-                </div>
-                {note.value}
-                {toxicity > 40 && <div className="text-red-500 mt-2 text-xm bg-red-50 w-auto py-1 px-2 rounded">{toxicity.toFixed(2)}% likely to be toxic</div>}
-              </div>
-            );
-          })}
 
-        {!notes?.data?.length && (
+      <div className="columns-1 gap-5 sm:columns-5 p-5 mb-12 sm:mb-0">
+        {notes && notes?.length > 0 ? (
+          notes.map((note: Note, index: number) => (
+            <NoteCard note={note} index={index} key={note.created_at + "-" + index} />
+          ))
+        ) : (
           <div className="text-sm">
-            Worlds in peace and all notes still kept in our hearts. Let's put
-            them in.
+            Worlds in peace and all notes still kept in our hearts. Let's put them in.
           </div>
         )}
       </div>

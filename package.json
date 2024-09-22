@@ -12,6 +12,7 @@
     "clsx": "^2.1.1",
     "geist": "^1.2.1",
     "googleapis": "^140.0.1",
+    "html-to-image": "^1.11.11",
     "joi": "^17.13.3",
     "next": "latest",
     "postcss": "8.4.33",
